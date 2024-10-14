@@ -1,0 +1,115 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://WWW.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genealogical Tree</title>
+    <style>
+        /* Basic tree structure styling */
+        .tree ul {
+            padding-top: 20px;
+            position: relative;
+            transition: all 0.5s;
+        }
+
+        .tree li {
+            float: left; /* Makes the items appear inline */
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0 5px;
+            transition: all 0.5s;
+        }
+
+        .tree li::before, .tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 1px solid #ccc;
+            width: 50%;
+            height: 20px;
+        }
+
+        .tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 1px solid #ccc;
+        }
+
+        .tree li:only-child::after, .tree li:only-child::before {
+            display: none;
+        }
+
+        .tree li:only-child {
+            padding-top: 0;
+        }
+
+        .tree li:first-child::before, .tree li:last-child::after {
+            border: 0 none;
+        }
+
+        .tree li:last-child::before {
+            border-right: 1px solid #ccc;
+        }
+
+        .tree li:first-child::after {
+            border-left: 1px solid #ccc;
+        }
+
+        .tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 1px solid #ccc;
+            width: 0;
+            height: 20px;
+        }
+
+        .tree li div {
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: inline-block;
+            background: white;
+            border-radius: 5px;
+            transition: all 0.5s;
+        }
+
+        /* Adding hover effect */
+        .tree li div:hover {
+            background: #e2f1f8;
+            border: 1px solid #3498db;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Genealogical Tree</h1>
+
+    <form method="post"  th:each="person : ${person}">
+    
+        <div class="tree">
+            <ul>
+                <li>
+                    <div th:text="${person.fathername}"></div>
+                    <ul>
+                        <li>
+                            <a class="btn btn-primary btn-sm"
+                             th:href="@{/products/edit(id=${person.id})}"> <div th:text="${person.personname}"></div></a>
+
+                           
+                            <ul>
+                                <li><div th:text="${person.child1}"></div></li>
+                                <li><div th:text="${person.child2}"></div></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+      </form>
+   
+</body>
+</html>
+
+   
